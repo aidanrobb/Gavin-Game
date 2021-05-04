@@ -1,5 +1,7 @@
 package GUI;
 
+import Games.Selection;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -13,9 +15,9 @@ public class gui {
 
    /**
     * Start up method for GUI
-    * @throws IOException
-    * @throws UnsupportedAudioFileException
-    * @throws LineUnavailableException
+    * @throws IOException - Basic Exception
+    * @throws UnsupportedAudioFileException - Basic Exception
+    * @throws LineUnavailableException - Basic Exception
     */
    public static void startUp() throws IOException, UnsupportedAudioFileException, LineUnavailableException {
       JFrame mainFrame = new JFrame("Gavin's Game");
@@ -27,43 +29,41 @@ public class gui {
       AudioInputStream title = AudioSystem.getAudioInputStream(new File("Assests/sounds/TitleSong.wav"));
       Clip song = AudioSystem.getClip();
       song.open(title);
-      song.loop(1);
+      //song.loop(1);
       mainFrame.setVisible(true);
 
    }
 
    /**
     * @param window main JFRAME
-    * @return updated JFRAME with new panel
-    * @throws IOException
+    * @throws IOException - Basic Exception
     */
-   public static JFrame mainPanel(JFrame window) throws IOException {
+   public static void mainPanel(JFrame window) throws IOException {
       JLabel background = new JLabel(new ImageIcon(ImageIO.read(new File("Assests/imgs/GavinGame.png"))));
       window.getContentPane().add(BorderLayout.CENTER, background);
-      return window;
 
    }
 
    /**
     * @param window main JFRAME
-    * @return Updated JFRAME with new button
     */
-   public static JFrame startButton(JFrame window){
+   public static void startButton(JFrame window){
+
       JButton startButton = new JButton("Start");
-      ActionListener start = new ActionListener() {
+      startButton.setPreferredSize(new Dimension(40,40));
+      startButton.addActionListener(new ActionListener() {
          @Override
          public void actionPerformed(ActionEvent e) {
-            System.exit(0);
+            window.dispose();
+            new Selection();
          }
-      };
-      startButton.addActionListener(start);
-      startButton.setPreferredSize(new Dimension(40,40));
+      });
+
       window.getContentPane().add(BorderLayout.SOUTH, startButton);
-      //window.add(startButton);
-      return window;
    }
 
-   public static JFrame mainMenu (JFrame window){
+
+   public static void mainMenu (JFrame window){
       JMenuBar menu = new JMenuBar();
       JMenu option1 = new JMenu("File");
       JMenu option2 = new JMenu("About");
@@ -79,9 +79,7 @@ public class gui {
       option1.add(subOption11);
       JMenuItem subOption22 = new JMenuItem("This game was made for Gavin Robb Williamson");
       option2.add(subOption22);
-      //window.add(menu);
       window.getContentPane().add(BorderLayout.NORTH, menu);
-      return window;
    }
 
 }
